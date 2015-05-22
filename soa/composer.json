@@ -1,0 +1,20 @@
+{
+  "name": "soa/daemon",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Daniel Schubert",
+      "email": "daniel.schubert@smail.fh-koeln.de"
+    }
+  ],
+  "require": {
+    "videlalvaro/php-amqplib": "v2.1.0"
+  },
+    "autoload": {
+      "psr-4": {
+        "Soa\\Daemon\\": "src/"
+      }
+    }
+}
