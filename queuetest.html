@@ -3,12 +3,14 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Testing RabbitMQ Web Stomp</title>
-
+    <script src="http://code.jquery.com/jquery.js"></script>
     <!-- From: http://cdn.sockjs.org/ -->
     <script src="js/queue/sockjs.js"></script>
 
     <!-- From RabbitMQ-Web-Stomp examples -->
     <script src="js/queue/stomp.js"></script>
+
+    <script src="js/rx.all.min.js"></script>
 
     <!-- Our example app -->
     <script src="js/queue/listener-app.js"></script>
@@ -23,7 +25,13 @@
 <body>
 
 <h1>Waiting for messages</h1>
-
+<select id="tickerFilter">
+    <option value="-1">Alle</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+    <option value="40">40</option>
+</select>
 <div id="output">
     <!-- incoming messages will be printed here -->
 </div>

@@ -30,7 +30,9 @@ class Ticker implements StaticKeyInterface {
             15,
             20,
             25,
-            30
+            30,
+            35,
+            45,
         );
 
     }

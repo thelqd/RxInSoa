@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Reactive Dashboard</title>
+    <link href="css/main.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/queue/sockjs.js"></script>
+    <script src="js/queue/stomp.js"></script>
+    <script src="js/rx.all.min.js"></script>
+</head>
+    <body>
+        <div id="bodyWrapper">
+            <div id="autoCompleteWrapper">
+                Bitte Suchwort eingeben:
+                <input type="text" id="autoComplete" />
+            </div>
+            <div id="privateMessageWrapper">
+                Private Nachrichten:
+            </div>
+            <div id="mainWrapper">
+                <div id="tickerWrapper">
+                    <script src="js/queue/ticker.js"></script>
+                    Ihre Börsenkurse: <br />
+                    Ab Aktienkurs von:
+                    <select id="tickerFilter">
+                        <option value="-1">Alle</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                    </select>
+                    <table id="tickerData">
+                        <thead>
+                            <tr>
+                                <th>Firma</th>
+                                <th>Ident</th>
+                                <th>Kurs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div id="outputMessages">
+                    Debug Informationen:<br />
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </body>
+</html>

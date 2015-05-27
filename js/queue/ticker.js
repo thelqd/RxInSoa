@@ -1,41 +1,42 @@
-/**
- * Created by ds on 20.05.15.
- */
-// Use SockJS
 Stomp.WebSocketClass = SockJS;
 
 // Connection parameters
 var mq_username = "guest",
     mq_password = "guest",
     mq_url      = 'http://localhost:15674/stomp',
-
-// The queue we will read. The /topic/ queues are temporary
-// queues that will be created when the client connects, and
-// removed when the client disconnects. They will receive
-// all messages published in the "amq.topic" exchange, with the
-// given routing key, in this case "mymessages"
     mq_queue    = "/queue/ticker";
 
 // This is where we print incomoing messages
-var output;
 
 function parseMessage(message) {
     return JSON.parse(message);
 }
+
+// Get the Company name for given Ident
+function mapCompanyName(ident) {
+    var names = {
+        AEG: "AEG",
+        SIE: 'Siemens',
+        DBB: 'Deutsche Bahn',
+        EAS: 'Airbus'
+    };
+    return names[ident];
+}
+
 var source = Rx.Observable.create(function (observer) {
     var client = Stomp.client(mq_url);
-    client.debug = null
+    client.debug = null;
     client.connect(
         mq_username,
         mq_password,
         function on_connect() {
-            output.innerHTML += 'Connected to RabbitMQ-Web-Stomp<br />';
+            $("#outputMessages").append('Connected to RabbitMQ-Web-Stomp<br />');
             client.subscribe(mq_queue, function(m) {
                 observer.onNext(parseMessage(m.body));
             });
         },
         function() {
-            output.innerHTML += 'Connection failed!<br />';
+            $("#outputMessages").append('Connection failed!<br />');
             client.disconnect();
             observer.onCompleted();
         }
@@ -43,23 +44,23 @@ var source = Rx.Observable.create(function (observer) {
 
     // Any cleanup logic might go here
     return function () {
-        console.log('disposed');
+        $("#outputMessages").append('Connection closed');
         client.disconnect();
     }
 })
-.map(function(message){
-    var limit = $("#tickerFilter ").find(":selected").val();
-    if(limit > 0) {
-        var result = [];
-        message.data.forEach(function(elem){
-           if(elem.value >= limit) {
-               result.push(elem);
-           }
-        });
-        return result;
-    }
-    return message.data;
-});
+    .map(function(message){
+        var limit = $("#tickerFilter ").find(":selected").val();
+        if(limit > 0) {
+            var result = [];
+            message.data.forEach(function(elem){
+                if(elem.value >= limit) {
+                    result.push(elem);
+                }
+            });
+            return result;
+        }
+        return message.data;
+    });
 
 // Create and start Hot Subscription
 hotTicker = source.publish();
@@ -69,10 +70,16 @@ hotTicker.connect();
 /// Create observer
 var observer = Rx.Observer.create(
     function (x) {
+        var tBody;
         x.forEach(function(elem) {
-            output.innerHTML += elem.ident + ":" + elem.value + " - ";
+            tBody += "<tr>";
+            tBody += "<td>" + mapCompanyName(elem.ident) + "</td>";
+            tBody += "<td>" + elem.ident + "</td>";
+            tBody += "<td>" + elem.value + "</td>";
+            tBody += "</tr>";
+
         });
-        output.innerHTML += '<br />';
+        $("#tickerData").find("tbody").html(tBody);
     },
     function (e) { console.log('onError: %s', e); },
     function () { console.log('onCompleted'); }
@@ -81,13 +88,3 @@ var observer = Rx.Observer.create(
 setTimeout(function() {
     var subscription = hotTicker.subscribe(observer);
 }, 2000);
-
-
-window.onload = function () {
-    // Fetch output panel
-    output = document.getElementById("output");
-
-    //connectWebSocket();
-
-}
-
