@@ -12,16 +12,6 @@ function parseMessage(message) {
     return JSON.parse(message);
 }
 
-// Get the Company name for given Ident
-function mapCompanyName(ident) {
-    var names = {
-        AEG: "AEG",
-        SIE: 'Siemens',
-        DBB: 'Deutsche Bahn',
-        EAS: 'Airbus'
-    };
-    return names[ident];
-}
 
 var source = Rx.Observable.create(function (observer) {
     var client = Stomp.client(mq_url);
@@ -30,13 +20,12 @@ var source = Rx.Observable.create(function (observer) {
         mq_username,
         mq_password,
         function on_connect() {
-            $("#outputMessages").append('Connected to RabbitMQ-Web-Stomp<br />');
+            $("#outputMessages").append('Connected to queue ticker<br />');
             client.subscribe(mq_queue, function(m) {
                 observer.onNext(parseMessage(m.body));
             });
         },
         function() {
-            $("#outputMessages").append('Connection failed!<br />');
             client.disconnect();
             observer.onCompleted();
         }
@@ -44,7 +33,7 @@ var source = Rx.Observable.create(function (observer) {
 
     // Any cleanup logic might go here
     return function () {
-        $("#outputMessages").append('Connection closed');
+        $("#outputMessages").append('Connection for ticker closed');
         client.disconnect();
     }
 })
@@ -70,13 +59,9 @@ hotTicker.connect();
 /// Create observer
 var observer = Rx.Observer.create(
     function (x) {
-        var tBody;
+        var tBody = '';
         x.forEach(function(elem) {
-            tBody += "<tr>";
-            tBody += "<td>" + mapCompanyName(elem.ident) + "</td>";
-            tBody += "<td>" + elem.ident + "</td>";
-            tBody += "<td>" + elem.value + "</td>";
-            tBody += "</tr>";
+            tBody += createTableRow(elem);
 
         });
         $("#tickerData").find("tbody").html(tBody);

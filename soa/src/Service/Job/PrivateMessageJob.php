@@ -2,14 +2,14 @@
 
 namespace Soa\Daemon\Service\Job;
 
-use Soa\Daemon\Data\Generator\Ticker as TickerGenerator;
-use Soa\Daemon\Data\Values\Ticker as TickerValues;
+use Soa\Daemon\Data\Generator\PrivateMessage as Generator;
+use Soa\Daemon\Data\Values\PrivateMessage as Values;
 
-class TickerJob extends JobBase {
-
-    const SLEEP_TIME = 2;
-
-    const QUEUE = 'ticker';
+class PrivateMessageJob extends JobBase {
+    /**
+     * @var string
+     */
+    const QUEUE = 'pm';
 
     /**
      * @param int $runtime
@@ -24,7 +24,7 @@ class TickerJob extends JobBase {
      */
     public function getSleep()
     {
-        return self::SLEEP_TIME;
+        return rand(2, 10);
     }
 
     /**
@@ -40,7 +40,7 @@ class TickerJob extends JobBase {
      */
     public function generateData()
     {
-        $generator = new TickerGenerator(new TickerValues());
+        $generator = new Generator(new Values());
         $this->response->pushData(
             $generator->getData()
         );

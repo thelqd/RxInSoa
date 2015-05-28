@@ -28,7 +28,27 @@
     border-bottom: 1px solid #000000;
 }
 
-#tickerData {
+table#tickerData,
+table#tickerData th,
+table#tickerData th td,
+table#tickerData tr, td {
     border: 1px solid #000000;
     border-collapse: collapse;
+}
+
+table#tickerData th td,
+table#tickerData tr, td {
+    padding: 2px;
+}
+table#tickerData {
+    width: 300px;
+}
+
+.col1 {
+    width: 196px;
+}
+
+.col2, .col3 {
+    width: 50px;
+    text-align: center;
 }

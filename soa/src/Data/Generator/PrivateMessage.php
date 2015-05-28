@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ds
- * Date: 19.05.15
- * Time: 20:53
- */
 
 namespace Soa\Daemon\Data\Generator;
 
 use Soa\Daemon\Data\StaticKeyInterface;
 
-
-class Ticker implements GeneratorInterface {
+class PrivateMessage implements GeneratorInterface {
 
     /**
      * @var StaticKeyInterface
@@ -37,15 +30,15 @@ class Ticker implements GeneratorInterface {
      */
     private function generate()
     {
-        foreach ($this->names->getKeys() as $key) {
-            $this->mockedData[] = array(
-                'ident' => $key,
-                'value' => $this->names->getRandomValue()
-            );
-        }
-
+        $senderArray = $this->names->getKeys();
+        $sender = $senderArray[rand(0, $this->names->getCount()-1)];
+        $message = $this->names->getRandomValue();
+        $this->mockedData[] = array(
+            'sender' => $sender,
+            'topic' => $message['topic'],
+            'text' => $message['text']
+        );
     }
-
     /**
      * @return array
      */

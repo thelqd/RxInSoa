@@ -12,10 +12,19 @@ use Soa\Daemon\Data\StaticKeyInterface;
 
 class Ticker implements StaticKeyInterface {
 
+    /**
+     * @var array
+     */
     private $keys = array();
 
+    /**
+     * @var array
+     */
     private $values = array();
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->keys = array(
@@ -37,17 +46,26 @@ class Ticker implements StaticKeyInterface {
 
     }
 
+    /**
+     * @return array
+     */
     public function getKeys()
     {
         return $this->keys;
     }
 
+    /**
+     * @return int
+     */
     public function getRandomValue()
     {
         $valueCount = count($this->values);
         return $this->values[rand(0, $valueCount-1)];
     }
 
+    /**
+     * @return int
+     */
     public function getCount()
     {
         return count($this->keys);

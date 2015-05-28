@@ -9,6 +9,7 @@
 namespace Soa\Daemon\Service;
 
 use Soa\Daemon\Service\Job\JobInterface;
+use Soa\Daemon\Service\Job\PrivateMessageJob;
 use Soa\Daemon\Service\Job\TickerJob;
 
 class JobFactory {
@@ -17,7 +18,8 @@ class JobFactory {
      * @var array
      */
     private static $availableJobs = array(
-        'ticker'
+        'ticker',
+        'pm'
     );
 
     /**
@@ -33,9 +35,11 @@ class JobFactory {
         $loadedObject = null;
 
         switch($jobName) {
-            case 'ticker';
+            case 'ticker':
                 $loadedObject = new TickerJob($runtime);
             break;
+            case 'pm':
+                $loadedObject = new PrivateMessageJob($runtime);
         }
 
         return $loadedObject;
