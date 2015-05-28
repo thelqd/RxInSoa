@@ -24,7 +24,7 @@ class PrivateMessageJob extends JobBase {
      */
     public function getSleep()
     {
-        return rand(2, 10);
+        return rand(2, 5);
     }
 
     /**

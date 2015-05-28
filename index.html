@@ -9,6 +9,7 @@
     <script src="js/queue/stomp.js"></script>
     <script src="js/rx.all.min.js"></script>
     <script src="js/renderFunctions.js"></script>
+    <script src="js/queue/initQueue.js"></script>
 </head>
     <body>
         <div id="bodyWrapper">
@@ -17,7 +18,9 @@
                 <input type="text" id="autoComplete" />
             </div>
             <div id="privateMessageWrapper">
+                <script src="js/queue/pm.js"></script>
                 Private Nachrichten:
+                <div id="pmResult"></div>
             </div>
             <div id="mainWrapper">
                 <div id="tickerWrapper">

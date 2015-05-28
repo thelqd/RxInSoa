@@ -16,6 +16,8 @@ class PrivateMessage implements GeneratorInterface {
      */
     private $mockedData = array();
 
+    const MESSAGE_CHANCE = 20;
+
     /**
      * @param StaticKeyInterface $names
      */
@@ -30,14 +32,22 @@ class PrivateMessage implements GeneratorInterface {
      */
     private function generate()
     {
-        $senderArray = $this->names->getKeys();
-        $sender = $senderArray[rand(0, $this->names->getCount()-1)];
-        $message = $this->names->getRandomValue();
-        $this->mockedData[] = array(
-            'sender' => $sender,
-            'topic' => $message['topic'],
-            'text' => $message['text']
-        );
+        //we won't create a new message every run
+        if(self::MESSAGE_CHANCE >= rand(1, 100)) {
+            $senderArray = $this->names->getKeys();
+            $sender = $senderArray[rand(0, $this->names->getCount() - 1)];
+            $message = $this->names->getRandomValue();
+            $this->mockedData[] = array(
+                'new' => true,
+                'sender' => $sender,
+                'topic' => $message['topic'],
+                'text' => $message['text']
+            );
+        } else {
+            $this->mockedData[] = array(
+                'new' => false
+            );
+        }
     }
     /**
      * @return array

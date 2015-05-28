@@ -1,19 +1,6 @@
-Stomp.WebSocketClass = SockJS;
+var tickerQueue    = "/queue/ticker";
 
-// Connection parameters
-var mq_username = "guest",
-    mq_password = "guest",
-    mq_url      = 'http://localhost:15674/stomp',
-    mq_queue    = "/queue/ticker";
-
-// This is where we print incomoing messages
-
-function parseMessage(message) {
-    return JSON.parse(message);
-}
-
-
-var source = Rx.Observable.create(function (observer) {
+var tickerSource = Rx.Observable.create(function (observer) {
     var client = Stomp.client(mq_url);
     client.debug = null;
     client.connect(
@@ -21,7 +8,7 @@ var source = Rx.Observable.create(function (observer) {
         mq_password,
         function on_connect() {
             $("#outputMessages").append('Connected to queue ticker<br />');
-            client.subscribe(mq_queue, function(m) {
+            client.subscribe(tickerQueue, function(m) {
                 observer.onNext(parseMessage(m.body));
             });
         },
@@ -31,33 +18,31 @@ var source = Rx.Observable.create(function (observer) {
         }
     );
 
-    // Any cleanup logic might go here
     return function () {
         $("#outputMessages").append('Connection for ticker closed');
         client.disconnect();
     }
-})
-    .map(function(message){
-        var limit = $("#tickerFilter ").find(":selected").val();
-        if(limit > 0) {
-            var result = [];
-            message.data.forEach(function(elem){
-                if(elem.value >= limit) {
-                    result.push(elem);
-                }
-            });
-            return result;
-        }
-        return message.data;
-    });
+}).map(function(message){
+    var limit = $("#tickerFilter ").find(":selected").val();
+    if(limit > 0) {
+        var result = [];
+        message.data.forEach(function(elem){
+            if(elem.value >= limit) {
+                result.push(elem);
+            }
+        });
+        return result;
+    }
+    return message.data;
+});
 
 // Create and start Hot Subscription
-hotTicker = source.publish();
+hotTicker = tickerSource.publish();
 hotTicker.connect();
 
 
 /// Create observer
-var observer = Rx.Observer.create(
+var tickerObserver = Rx.Observer.create(
     function (x) {
         var tBody = '';
         x.forEach(function(elem) {
@@ -71,5 +56,5 @@ var observer = Rx.Observer.create(
 );
 
 setTimeout(function() {
-    var subscription = hotTicker.subscribe(observer);
+    var subscription = hotTicker.subscribe(tickerObserver);
 }, 2000);

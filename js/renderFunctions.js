@@ -1,3 +1,8 @@
+// parse a string to JSON
+function parseMessage(message) {
+    return JSON.parse(message);
+}
+
 // Get the Company name for given Ident
 function mapCompanyName(ident) {
     var names = {
