@@ -8,6 +8,7 @@
 
 namespace Soa\Daemon\Service;
 
+use Soa\Daemon\Service\Job\AutoCompleteJob;
 use Soa\Daemon\Service\Job\JobInterface;
 use Soa\Daemon\Service\Job\PrivateMessageJob;
 use Soa\Daemon\Service\Job\TickerJob;
@@ -19,7 +20,8 @@ class JobFactory {
      */
     private static $availableJobs = array(
         'ticker',
-        'pm'
+        'pm',
+        'autocomplete'
     );
 
     /**
@@ -37,9 +39,13 @@ class JobFactory {
         switch($jobName) {
             case 'ticker':
                 $loadedObject = new TickerJob($runtime);
-            break;
+                break;
             case 'pm':
                 $loadedObject = new PrivateMessageJob($runtime);
+                break;
+            case 'autocomplete':
+                $loadedObject = new AutoCompleteJob($runtime);
+                break;
         }
 
         return $loadedObject;

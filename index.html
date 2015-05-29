@@ -14,18 +14,19 @@
     <body>
         <div id="bodyWrapper">
             <div id="autoCompleteWrapper">
-                Bitte Suchwort eingeben:
+                <b>Bitte Suchwort eingeben:</b>
                 <input type="text" id="autoComplete" />
             </div>
             <div id="privateMessageWrapper">
                 <script src="js/queue/pm.js"></script>
-                Private Nachrichten:
-                <div id="pmResult"></div>
+                <b>Private Nachrichten (<span id="pmCount">0</span>):</b>
+                <div id="pmResult">
+                </div>
             </div>
             <div id="mainWrapper">
                 <div id="tickerWrapper">
                     <script src="js/queue/ticker.js"></script>
-                    Ihre Börsenkurse: <br />
+                    <b>Ihre Börsenkurse:</b><br />
                     Ab Aktienkurs von:
                     <select id="tickerFilter">
                         <option value="-1">Alle</option>

@@ -23,3 +23,33 @@ function createTableRow(rowData) {
     tBody += "</tr>";
     return tBody;
 }
+
+function writeDebugMessage(message) {
+    $("#outputMessages").append(message+'<br />');
+}
+
+function showMessage(item) {
+    $(item).next(".pmBody").toggle();
+}
+
+function createPmEntry(elem) {
+    var pmBody = "",
+        pmCount = parseInt($("#pmCount").html());
+    pmBody += '<div class="pmBox">';
+    pmBody += '<div class="pmTitle" onclick="showMessage(this)">';
+    pmBody += elem.topic;
+    pmBody += ' von '+ elem.sender;
+    pmBody += '</div>';
+    pmBody += '<div class="pmBody">';
+    pmBody += elem.text;
+    pmBody += '</div>';
+    pmBody += '</div>';
+    $("#pmResult").prepend(pmBody);
+
+    pmCount++;
+    $("#pmCount").html(pmCount);
+
+
+
+
+}

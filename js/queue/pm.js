@@ -7,7 +7,7 @@ var pmSource = Rx.Observable.create(function (observer) {
         mq_username,
         mq_password,
         function on_connect() {
-            $("#outputMessages").append('Connected to queue pm<br />');
+            writeDebugMessage('Connected to queue pm');
             client.subscribe(pmQueue, function(m) {
                 observer.onNext(parseMessage(m.body));
             });
@@ -19,25 +19,21 @@ var pmSource = Rx.Observable.create(function (observer) {
     );
 
     return function () {
-        $("#outputMessages").append('Connection for queue closed');
+        writeDebugMessage('Connection for queue pm closed');
         client.disconnect();
     }
 }).map(function(message){
-
-    return message.data[0];
+    return message.data;
 }).filter(function(message) {
-    console.log(message);
-
     return message.new == true;
 });
 
 /// Create observer
 var pmObserver = Rx.Observer.create(
     function (x) {
-        console.log('observer:');
-        console.log(x);
+        createPmEntry(x);
     },
-    function (e) { console.log('onError: %s', e); },
+    function (e) { console.log('pm error: %s', e); },
     function () { console.log('completed pm'); }
 );
 

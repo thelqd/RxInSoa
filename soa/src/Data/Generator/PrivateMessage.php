@@ -37,7 +37,7 @@ class PrivateMessage implements GeneratorInterface {
             $senderArray = $this->names->getKeys();
             $sender = $senderArray[rand(0, $this->names->getCount() - 1)];
             $message = $this->names->getRandomValue();
-            $this->mockedData[] = array(
+            $this->mockedData = array(
                 'new' => true,
                 'sender' => $sender,
                 'topic' => $message['topic'],

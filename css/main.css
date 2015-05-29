@@ -15,8 +15,9 @@
 #privateMessageWrapper {
     min-height: 500px;
     border-right: 1px solid #000000;
-    width: 249px;
+    width: 246px;
     float: left;
+    padding: 3px 0 0 5px;
 }
 
 #mainWrapper {
@@ -51,4 +52,22 @@ table#tickerData {
 .col2, .col3 {
     width: 50px;
     text-align: center;
+}
+
+.pmBox {
+    width: 240px;
+    border: 1px solid #000000;
+    margin-bottom: 2px;
+}
+.pmTitle {
+    border-bottom: 1px solid #000000;
+}
+
+.pmTitle:hover {
+    background-color: #999999;
+    cursor: pointer;
+}
+
+.pmBody {
+    display: none;
 }

@@ -2,14 +2,14 @@
 
 namespace Soa\Daemon\Service\Job;
 
-use Soa\Daemon\Data\Generator\Ticker as TickerGenerator;
-use Soa\Daemon\Data\Values\Ticker as TickerValues;
+use Soa\Daemon\Data\Values\AutoComplete as Values;
+use Soa\Daemon\Data\Generator\AutoComplete as Generator;
 
-class TickerJob extends JobBase {
+class AutoCompleteJob extends JobBase {
 
-    const SLEEP_TIME = 1;
+    const SLEEP_TIME = 0;
 
-    const QUEUE = 'ticker';
+    const QUEUE = '';
 
     /**
      * @param int $runtime
@@ -40,7 +40,7 @@ class TickerJob extends JobBase {
      */
     public function generateData()
     {
-        $generator = new TickerGenerator(new TickerValues());
+        $generator = new Generator(new Values());
         $this->response->pushData(
             $generator->getData()
         );

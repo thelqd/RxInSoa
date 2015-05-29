@@ -7,7 +7,7 @@ var tickerSource = Rx.Observable.create(function (observer) {
         mq_username,
         mq_password,
         function on_connect() {
-            $("#outputMessages").append('Connected to queue ticker<br />');
+            writeDebugMessage('Connected to queue ticker');
             client.subscribe(tickerQueue, function(m) {
                 observer.onNext(parseMessage(m.body));
             });
@@ -19,7 +19,7 @@ var tickerSource = Rx.Observable.create(function (observer) {
     );
 
     return function () {
-        $("#outputMessages").append('Connection for ticker closed');
+        writeDebugMessage('Connection for ticker closed');
         client.disconnect();
     }
 }).map(function(message){
@@ -52,7 +52,7 @@ var tickerObserver = Rx.Observer.create(
         $("#tickerData").find("tbody").html(tBody);
     },
     function (e) { console.log('onError: %s', e); },
-    function () { console.log('onCompleted'); }
+    function () { console.log('ticker stream completed'); }
 );
 
 setTimeout(function() {

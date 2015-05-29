@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#outputMessages").append("Starting interval callbacks for ticker <br />");
+    writeDebugMessage("Starting interval callbacks for ticker every second");
 
     setInterval(function() {
         $.get("soa/daemon.php", {job: 'ticker'}, function(ticker) {
