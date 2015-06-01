@@ -5,13 +5,17 @@
     <title>Traditional Ajax Dashboard</title>
     <link href="css/main.css" rel="stylesheet" />
     <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/jquery/jquery.typewatch.js"></script>
     <script src="js/renderFunctions.js"></script>
 </head>
     <body>
         <div id="bodyWrapper">
             <div id="autoCompleteWrapper">
-                Bitte Suchwort eingeben:
-                <input type="text" id="autoComplete" />
+                <script src="js/jquery/autocomplete.js"></script>
+                <b>Bitte Suchwort eingeben:</b>
+                <input type="text" id="autoComplete" autocomplete="off" />
+                <ul class="autoComplete" id="autoCompleteOverlay">
+                </ul>
             </div>
             <div id="privateMessageWrapper">
                 <script src="js/jquery/pm.js"></script>

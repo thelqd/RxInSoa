@@ -14,8 +14,11 @@
     <body>
         <div id="bodyWrapper">
             <div id="autoCompleteWrapper">
+                <script src="js/queue/autocomplete.js"></script>
                 <b>Bitte Suchwort eingeben:</b>
-                <input type="text" id="autoComplete" />
+                <input type="text" id="autoComplete" autocomplete="off" />
+                <ul class="autoComplete" id="autoCompleteOverlay">
+                </ul>
             </div>
             <div id="privateMessageWrapper">
                 <script src="js/queue/pm.js"></script>

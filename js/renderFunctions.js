@@ -48,8 +48,10 @@ function createPmEntry(elem) {
 
     pmCount++;
     $("#pmCount").html(pmCount);
-
-
-
-
 }
+
+function selectItem(elem) {
+    $("#autoComplete").val($(elem).html());
+    $("#autoCompleteOverlay").hide();
+}
+

@@ -49,7 +49,7 @@ class AutoComplete implements GeneratorInterface {
         if(isset($keyword)) {
             $values = $this->values->getRandomValues();
             foreach($values as $value) {
-                if(strpos($value, $keyword) === 0) {
+                if(strpos($value, strtolower($keyword)) === 0) {
                     $this->mockedData[] = $value;
                 }
             }

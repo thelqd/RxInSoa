@@ -71,3 +71,29 @@ table#tickerData {
 .pmBody {
     display: none;
 }
+
+ul.autoComplete {
+    border: 1px solid #000000;
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    top: 30px;
+    left: 187px;
+    width: 135px;
+    z-index: 100;
+    background-color: #ffffff;
+    display: none;
+}
+
+li.menuItem {
+    position: relative;
+    margin: 0;
+    padding: 3px 1em 3px .4em;
+    cursor: pointer;
+}
+
+li.menuItem:hover {
+    background-color: #999999;
+}
